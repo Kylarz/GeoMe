@@ -14,6 +14,7 @@ var firebaseConfig = {
   // Initialize Firebase
   
   const firebaseApp = firebase.initializeApp(firebaseConfig);
+  //firebaseApp.firestore().settings({ timestampsInSnapshots: true}) // Use it for old version
 
   export default firebaseApp.firestore();   
 
