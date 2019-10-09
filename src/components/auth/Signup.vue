@@ -58,7 +58,6 @@ export default {
                     } else {
                         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
                         .then(user => {
-                            //console.log('DEBUG : d"user id ' + user.uid)
                             ref.set({
                                 alias: this.alias,
                                 geolocation: null
