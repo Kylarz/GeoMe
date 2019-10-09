@@ -5,7 +5,7 @@
             
             <div class="field">
                 <label for="email">Email:</label>
-                <input type="email" name="email">
+                <input type="email" name="email" v-model="email">
             </div>
 
             <div class="field">
@@ -30,6 +30,7 @@
 <script>
 import slugify from 'slugify'
 import db from '@/firebase/init'
+import firebase from 'firebase'
 
 export default {
     name: 'Signup',
@@ -44,7 +45,7 @@ export default {
     },
     methods: {
         signup(){
-            if(this.alias) {
+            if(this.alias && this.email && this.password) {
                 this.slug = slugify(this.alias, {
                     replacement: '-',
                     remove: /[$*_+~.()'"!\-:@]/g,
@@ -55,6 +56,13 @@ export default {
                     if(doc.exists){
                         this.feedback = 'This alias already exist'
                     } else {
+                        console.log('User va se creer')
+                        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+                        .catch(err => {
+                            // Handle Errors here.
+                            console.log(err)
+                            this.feedback = err.message
+                        })
                         this.feedback = 'This alias is free to use'
                     }
                 })
