@@ -50,7 +50,14 @@ export default {
                     remove: /[$*_+~.()'"!\-:@]/g,
                     lower: true
                 })
-                let ref = db.collection('users')
+                let ref = db.collection('users').doc(this.slug)
+                ref.get().then(doc => {
+                    if(doc.exists){
+                        this.feedback = 'This alias already exist'
+                    } else {
+                        this.feedback = 'This alias is free to use'
+                    }
+                })
                 console.log(this.slug)
             } else {
                 this.feedback = "You must enter an alias"
